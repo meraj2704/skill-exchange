@@ -3,9 +3,16 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { 
-  LayoutDashboard, BookOpen, MessageSquare, 
-  User, LogOut, Menu, X, Bell, ChevronRight 
+import {
+  LayoutDashboard,
+  BookOpen,
+  MessageSquare,
+  User,
+  LogOut,
+  Menu,
+  X,
+  Bell,
+  ChevronRight,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -16,7 +23,11 @@ const menuItems = [
   { name: "Profile Settings", href: "/dashboard/profile", icon: User },
 ];
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -45,8 +56,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     // Using setTimeout(..., 0) moves the update to the next event loop tick.
     // This satisfies ESLint as it's no longer a "synchronous" update during mount.
     const timeoutId = setTimeout(() => {
-      setAuthState({ isMounted: true, user: parsedUser,
-      });
+      setAuthState({ isMounted: true, user: parsedUser });
     }, 0);
 
     return () => clearTimeout(timeoutId);
@@ -77,7 +87,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="flex min-h-screen bg-[#F8FAFC] dark:bg-black text-foreground">
-      
       {/* 1. Desktop Sidebar */}
       <aside className="hidden lg:flex w-72 flex-col bg-background border-r border-border sticky top-0 h-screen">
         <div className="p-8">
@@ -85,7 +94,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="h-9 w-9 bg-primary rounded-xl flex items-center justify-center text-white font-black italic shadow-lg shadow-primary/30">
               S
             </div>
-            <span className="text-xl font-black tracking-tighter uppercase">Skill Ex</span>
+            <span className="text-xl font-black tracking-tighter uppercase">
+              Skill Ex
+            </span>
           </Link>
         </div>
 
@@ -98,9 +109,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 key={item.href}
                 href={item.href}
                 className={`flex items-center justify-between px-4 py-3.5 rounded-2xl font-bold transition-all duration-200 group ${
-                  isActive 
-                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                  isActive
+                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -119,11 +130,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               {user?.name?.charAt(0).toUpperCase()}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-bold truncate leading-none mb-1">{user?.name}</p>
-              <p className="text-[10px] text-muted-foreground uppercase font-black tracking-tighter">Pro Member</p>
+              <p className="text-sm font-bold truncate leading-none mb-1">
+                {user?.name}
+              </p>
+              <p className="text-[10px] text-muted-foreground uppercase font-black tracking-tighter">
+                Pro Member
+              </p>
             </div>
           </div>
-          <button 
+          <button
             onClick={handleLogout}
             className="flex items-center gap-3 w-full px-4 py-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-2xl transition-all font-bold text-sm"
           >
@@ -137,20 +152,27 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
-            <motion.div 
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
               className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] lg:hidden"
             />
-            <motion.aside 
-              initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }}
+            <motion.aside
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="fixed inset-y-0 left-0 w-[280px] bg-background z-[70] lg:hidden shadow-2xl flex flex-col"
             >
               <div className="p-6 flex justify-between items-center border-b">
                 <span className="font-black text-xl">SKILL EX</span>
-                <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-muted rounded-full">
-                  <X size={20}/>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 bg-muted rounded-full"
+                >
+                  <X size={20} />
                 </button>
               </div>
               <nav className="flex-1 px-4 space-y-2 mt-4">
@@ -160,7 +182,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-5 py-4 rounded-2xl font-bold transition-colors ${
-                      pathname === item.href ? "bg-primary text-white" : "text-muted-foreground hover:bg-muted"
+                      pathname === item.href
+                        ? "bg-primary text-white"
+                        : "text-muted-foreground hover:bg-muted"
                     }`}
                   >
                     <item.icon size={20} />
@@ -177,14 +201,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="flex-1 flex flex-col min-w-0">
         <header className="h-20 bg-background/80 backdrop-blur-md border-b border-border/50 flex items-center justify-between px-6 lg:px-10 sticky top-0 z-50">
           <div className="flex items-center gap-4">
-            <button 
+            <button
               onClick={() => setIsMobileMenuOpen(true)}
               className="lg:hidden p-2 hover:bg-muted rounded-xl transition-colors"
             >
               <Menu size={24} />
             </button>
             <h2 className="font-black text-xl tracking-tight hidden sm:block">
-              {menuItems.find(i => i.href === pathname)?.name || "Dashboard"}
+              {menuItems.find((i) => i.href === pathname)?.name || "Dashboard"}
             </h2>
           </div>
 
@@ -199,9 +223,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </header>
 
-        <main className="p-6 lg:p-10">
-          {children}
-        </main>
+        <main className="p-6 lg:p-10">{children}</main>
       </div>
     </div>
   );
